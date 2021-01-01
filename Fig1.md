@@ -15,7 +15,7 @@ library(tidyverse)
 **Step 2: Acquire Data to Recreate Figure 1 from Github**
 
 ```
-Fig1_data<-read.csv(text=getURL("https://raw.githubusercontent.com/surtlab/Baltrus_et_al_mSphere_Megaplasmid_2021/main/Final_Putida_Nal_Results.csv"))
+Fig1_data<-read.csv(text=getURL("https://raw.githubusercontent.com/surtlab/Baltrus_et_al_mSphere_Megaplasmid_2021/main/Final_Stutzeri_Nal_Results.csv"))
 ```
 
 **Step 3: Create the Plot Background**
