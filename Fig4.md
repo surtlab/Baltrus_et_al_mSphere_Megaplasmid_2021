@@ -18,7 +18,7 @@ into three different subsets for each figure B through D.
 
 ```
 Fig4A_data<-read.csv(text=getURL("https://raw.githubusercontent.com/surtlab/Baltrus_et_al_mSphere_Megaplasmid_2021/main/Final_Putida_pMP_comps_Results.csv"))
-Fig4BCD_data<-read.csv(text=getURL("https://raw.githubusercontent.com/surtlab/Baltrus_et_al_mSphere_Megaplasmid_2021/main/pMPPutida_cross-enviroment-relative_fitness.csv"))
+Fig4BCD_data<-read.csv(text=getURL("https://raw.githubusercontent.com/surtlab/Baltrus_et_al_mSphere_Megaplasmid_2021/main/pMPPutida_cross-environment-relative_fitness.csv"))
 Fig4B_data<-subset(Fig4BCD_data,Experiment=="Nal")
 Fig4C_data<-subset(Fig4BCD_data,Experiment=="Cipro")
 Fig4D_data<-subset(Fig4BCD_data,Experiment=="Temp")
