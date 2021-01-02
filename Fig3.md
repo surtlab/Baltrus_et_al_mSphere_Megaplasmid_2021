@@ -77,7 +77,22 @@ ggsave(file="~/Desktop/Fig3.svg",plot=pq_plot,width=8,height=6)
 
 **Step 7: Statistics**
 
-Going to show the statistics for each graph separately below. First up is performing a ttest on the comparisons from Figure 3A, the Naldixic acid disc overlays for different P. putida strain pairs. First thing I will do is pull the data from each strain into it's own set from the overall dataset:
+Going to show the statistics for each graph separately below and in order. The first thing I do for each comparison is performing an ANOVA on the overall data to see if there's a significant effect of presence on the megaplasmid. 
+
+```
+CompPMPPutidaNal<-aov(Normalized_Area~Treatment+Strain+Treatment:Strain, data=Fig3A_data)
+summary(CompPMPPutidaNAL)
+```
+Which gives the following result:
+```
+            Df Sum Sq Mean Sq F value Pr(>F)    
+Treatment    1 1.4329  1.4329  147.57 <2e-16 ***
+Strain       2 1.1334  0.5667   58.36 <2e-16 ***
+Residuals   83 0.8059  0.0097                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+So, overall, strains of P. putida with the megaplasmid are more resistant to Nalidixic acid. This effect also seems to be somewhat strain specific, because of the significant effect of strain in the ANOVA comparison. Since there is a strain effect, lets use a ttest to pull strain specific paired  comparisons from Figure 3A. First thing I will do is pull the data from each strain into it's own set from the overall dataset:
 
 ```
 DBL305_Nal<-subset(Fig3A_data, Strain=="DBL305",select=c(Normalized_Area))
@@ -110,7 +125,7 @@ mean of x mean of y
 and then we do the same for strain pair DBL1604 and DBL1620:
 
 ```
-t.test(DBL1604_Nal,DBL759_Nal,var.equal=FALSE)
+t.test(DBL1604_Nal,DBL1620_Nal,var.equal=FALSE)
 ```
 
 giving the following results for strain pair DBL1604 and DBL1620:
@@ -118,18 +133,34 @@ giving the following results for strain pair DBL1604 and DBL1620:
 ```
 	Welch Two Sample t-test
 
-data:  DBL1604_Nal and DBL759_Nal
-t = 5.6875, df = 37.037, p-value = 1.659e-06
+data:  DBL1604_Nal and DBL1620_Nal
+t = 16.224, df = 33.408, p-value < 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 0.08701157 0.18331103
+ 0.3976326 0.5115983
 sample estimates:
 mean of x mean of y 
-1.0000185 0.8648572 
+1.0000185 0.5454031 
 ```
 
 Next, I repeat the exact same analysis for the Ciprofloxacin pairs from the `Fig3B_data` dataset.
 
+```
+CompPMPPutidaCip<-aov(Normalized_Area~Treatment+Strain+Treatment:Strain, data=Fig3B_data)
+summary(CompPMPPutidaCip)
+```
+Which shows a bit of a different picture than the Nalidixic acid results:
+```
+           Df Sum Sq Mean Sq F value   Pr(>F)    
+Treatment    1 0.0827 0.08271   12.99 0.000543 ***
+Strain       2 0.0462 0.02311    3.63 0.030969 *  
+Residuals   80 0.5094 0.00637                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+In this case there are both treatment and strain effects as well, but the comparison is in the other direction and presence of he megaplasmid seems to increase sensitivity to Ciprofloxacin.
+
+Let's check out the individual strain comparisons:
 ```
 DBL305_Cip<-subset(Fig3B_data, Strain=="DBL305",select=c(Normalized_Area))
 DBL759_Cip<-subset(Fig3B_data, Strain=="DBL759",select=c(Normalized_Area))
